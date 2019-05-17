@@ -4,7 +4,7 @@ LonHand protocol implementation for USR-WP1 smart socket (one-channel relay) by 
 
 [Product link](https://www.usriot.com/download/LonHand/USR-WP1%20EN%20V1.3.1.pdf)
 
-Usage:
+## Usage:
 ```
 from lonhand import device
 
@@ -21,6 +21,7 @@ state = switch.is_on()
 switch.turn_off()
 ```
 
+## Protocol
 Command:
 ```
 55 AA - distinguishes a command, unlike for example the password which
@@ -36,7 +37,8 @@ Command:
 01    - command parameter; in this case we are giving the ON command (02)
         and as a parameter the channel number to be switched on (01).
 06    - checksum, and represents the sum (in HEX) of the parts: 
-```        (0x00 + 0x03 + 0x00 + 0x02 + 0x01) = 0x06
+        (0x00 + 0x03 + 0x00 + 0x02 + 0x01) = 0x06
+```
 
 Response:
 ```
@@ -47,4 +49,3 @@ AA 55 - marks the message as a response
 01    - channel/port that was affected
 88    - checksum: (0x00 + 0x04 + 0x00 + 0x82 + 0x01 + 0x01) = 0x88
 ```
-
