@@ -35,6 +35,6 @@ class EthernetRelay(object):
         data = s.recv(BUFFER_SIZE)
         #
         s.close
-        #
-        self._state = (data == "?") # TBD
+        # TBD
+        self._state = (binascii.b2a_hex(data) == "AA 55 00 04 00 82 01 01 88")
 
