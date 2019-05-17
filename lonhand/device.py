@@ -36,11 +36,12 @@ RESPONSE_STATE_OFF = binascii.a2b_hex("AA 55 00 03 00 8A 00 8D".replace(" ", "")
 
 class WifiRelay(object):
 
-    def __init__(self, tcp_ip='192.168.1.43', tcp_port=8899, pwd="admin"):
+    def __init__(self, tcp_ip='192.168.1.23', tcp_port=8899, pwd="admin"):
         self._ip = tcp_ip
         self._port = tcp_port
         self._password = pwd
-        self._state = False
+        # get current state
+        self.is_on()
 
     def is_on(self):
         self.control(COMMAND_STATE)
