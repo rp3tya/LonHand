@@ -75,6 +75,6 @@ class WifiRelay(object):
         # close socket
         s.close()
         # on success check penultimate byte for state
-        if (auth == "OK") and (len(resp) > 1):
+        if (auth == b'OK') and (len(resp) > 1):
             self._state = (resp[len(resp)-2] == 0x01)
 
