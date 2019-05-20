@@ -40,6 +40,7 @@ class WifiRelay(object):
         self._ip = tcp_ip
         self._port = tcp_port
         self._password = pwd
+        self._state = None
         # get current state
         self.is_on()
 
@@ -48,10 +49,10 @@ class WifiRelay(object):
         return self._state
 
     def turn_on(self):
-        self.control(COMMAND_ON)
+        self.control(COMMAND_TURN_ON)
 
     def turn_off(self):
-        self.control(COMMAND_OFF)
+        self.control(COMMAND_TURN_OFF)
 
     def toggle(self):
         if (self._state):
@@ -63,9 +64,10 @@ class WifiRelay(object):
         BUFFER_SIZE = 2048
         # create socket
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((TCP_IP, TCP_PORT))
+        s.settimeout(10)
+        s.connect((self._ip, self._port))
         # send password, response is either "OK" or "NO"
-        s.send(self._password + "\r\n")
+        s.send("{}\r\n".format(self._password).encode())
         auth = s.recv(BUFFER_SIZE)
         # send actual command
         s.send(cmd)
