@@ -62,19 +62,24 @@ class WifiRelay(object):
 
     def control(self, cmd):
         BUFFER_SIZE = 2048
-        # create socket
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(10)
-        s.connect((self._ip, self._port))
-        # send password, response is either "OK" or "NO"
-        s.send("{}\r\n".format(self._password).encode())
-        auth = s.recv(BUFFER_SIZE)
-        # send actual command
-        s.send(cmd)
-        resp = s.recv(BUFFER_SIZE)
-        # close socket
-        s.close()
-        # on success check penultimate byte for state
-        if (auth == b'OK') and (len(resp) > 1):
-            self._state = (resp[len(resp)-2] == 0x01)
+        try:
+            # create socket
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.settimeout(10)
+            s.connect((self._ip, self._port))
+            # send password, response is either "OK" or "NO"
+            s.send("{}\r\n".format(self._password).encode())
+            auth = s.recv(BUFFER_SIZE)
+            # send actual command
+            s.send(cmd)
+            resp = s.recv(BUFFER_SIZE)
+            # close socket
+            s.close()
+            # on success check penultimate byte for state
+            if (auth == b'OK') and (len(resp) > 1):
+                self._state = (resp[len(resp)-2] == 0x01)
+            else:
+                self._state = None
+        except:
+            self._state = None
 

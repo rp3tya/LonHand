@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="lonhand",
-    version="0.3",
+    version="0.4",
     author="rp3tya",
     author_email="rpetya@hotmail.com",
     description="LonHand client library",
